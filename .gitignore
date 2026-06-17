@@ -2,9 +2,8 @@
 dist/
 # generated types
 .astro/
-# cloudflare / wrangler local state + secrets
-.wrangler/
-.dev.vars
+# vercel local state
+.vercel/
 # dependencies
 node_modules/
 # logs

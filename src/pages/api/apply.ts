@@ -1,11 +1,13 @@
 import type { APIRoute } from "astro";
+import { put } from "@vercel/blob";
 
-// This route runs on the Worker (not prerendered).
+// This route runs as a Vercel serverless function (not prerendered).
 export const prerender = false;
 
 const SKYGURU_ENDPOINT = "https://inclusive.skyguru.ai/api/v1/public/leads";
 const FORM_NAME = "Casting Evelin";
-const MAX_FILE = 100 * 1024 * 1024; // 100 MB (Worker request-body ceiling)
+// Vercel serverless functions cap the request body at ~4.5 MB — keep CVs under it.
+const MAX_FILE = 4 * 1024 * 1024; // 4 MB
 
 // Only the CV is uploaded for this form.
 const FILE_FIELDS = [{ field: "cv", label: "Линк към CV" }];
@@ -28,12 +30,7 @@ const json = (body: unknown, status: number) =>
 const sanitize = (name: string) =>
   (name || "file").replace(/[^a-zA-Z0-9._-]/g, "_").slice(-100) || "file";
 
-export const POST: APIRoute = async ({ request, url, locals }) => {
-  const bucket: any = (locals as any).runtime?.env?.UPLOADS;
-  if (!bucket) {
-    return json({ message: "Хранилището за файлове не е конфигурирано." }, 500);
-  }
-
+export const POST: APIRoute = async ({ request }) => {
   let form: FormData;
   try {
     form = await request.formData();
@@ -48,19 +45,23 @@ export const POST: APIRoute = async ({ request, url, locals }) => {
   if (!form.get("consent"))
     return json({ message: "Необходимо е съгласие за обработка на личните данни." }, 422);
 
-  // Upload the CV to R2 under a random key; collect the public link.
+  // Upload the CV to Vercel Blob (public, unguessable URL) and collect the link.
   const extra: { name: string; value: string }[] = [];
   for (const { field, label } of FILE_FIELDS) {
     const file = form.get(field);
     if (file instanceof File && file.size > 0) {
       if (file.size > MAX_FILE) {
-        return json({ message: `${label}: файлът е твърде голям (макс. 100 MB).` }, 422);
+        return json({ message: `${label}: файлът е твърде голям (макс. 4 MB).` }, 422);
       }
-      const key = `${crypto.randomUUID()}/${sanitize(file.name)}`;
-      await bucket.put(key, file.stream(), {
-        httpMetadata: { contentType: file.type || "application/octet-stream" },
-      });
-      extra.push({ name: label, value: `${url.origin}/files/${key}` });
+      try {
+        const blob = await put(`cv/${crypto.randomUUID()}/${sanitize(file.name)}`, file, {
+          access: "public",
+          contentType: file.type || "application/octet-stream",
+        });
+        extra.push({ name: label, value: blob.url });
+      } catch {
+        return json({ message: "Неуспешно качване на файла. Опитайте отново." }, 502);
+      }
     }
   }
 
