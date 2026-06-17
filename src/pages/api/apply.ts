@@ -59,8 +59,16 @@ export const POST: APIRoute = async ({ request }) => {
           contentType: file.type || "application/octet-stream",
         });
         extra.push({ name: label, value: blob.url });
-      } catch {
-        return json({ message: "Неуспешно качване на файла. Опитайте отново." }, 502);
+      } catch (e: any) {
+        // TODO(remove after debugging): surface the real Blob error.
+        return json(
+          {
+            message: "Неуспешно качване на файла. Опитайте отново.",
+            detail: String(e?.message || e).slice(0, 300),
+            hasToken: !!(globalThis as any).process?.env?.BLOB_READ_WRITE_TOKEN,
+          },
+          502,
+        );
       }
     }
   }
