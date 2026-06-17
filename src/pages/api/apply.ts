@@ -3,7 +3,7 @@ import type { APIRoute } from "astro";
 // This route runs on the Worker (not prerendered).
 export const prerender = false;
 
-const SKYGURU_ENDPOINT = "https://test-hb.skyguru.ai/api/v1/public/leads";
+const SKYGURU_ENDPOINT = "https://inclusive.skyguru.ai/api/v1/public/leads";
 const FORM_NAME = "Casting Evelin";
 const MAX_FILE = 100 * 1024 * 1024; // 100 MB (Worker request-body ceiling)
 

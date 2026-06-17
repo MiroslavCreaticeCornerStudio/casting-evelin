@@ -61,7 +61,7 @@ Mirrors the `casting-ralica` pipeline (CV-only). Deployed as a **Cloudflare Work
   Hidden fields capture **offline attribution** (`fbclid` → `fbc`, `_fbp`/`_fbc` cookies, UTMs, landing page, referrer).
 - The Worker uploads the **CV** to the **R2 bucket `UPLOADS`** → builds an unguessable link
   (`/files/<uuid>/<name>`, served by `src/pages/files/[...key].ts`), then forwards the lead
-  (name, phone, email, CV link, UTMs, `fbclid`) to **SkyGuru** (`https://test-hb.skyguru.ai/api/v1/public/leads`,
+  (name, phone, email, CV link, UTMs, `fbclid`) to **SkyGuru** (`https://inclusive.skyguru.ai/api/v1/public/leads`,
   `form: "Casting Evelin"`). Success → redirect to **`/thank-you`**.
 - **No on-page Meta Pixel** — attribution is offline/CAPI-style via the CRM (matches casting-ralica).
 
@@ -69,7 +69,7 @@ Mirrors the `casting-ralica` pipeline (CV-only). Deployed as a **Cloudflare Work
 1. In Cloudflare → R2, **create a bucket named `inclusive-uploads`** (matches `wrangler.jsonc` binding `UPLOADS`).
 2. Worker name in `wrangler.jsonc` is `inclusive-casting` — must match your Cloudflare Worker.
 3. `npm run build` then `npx wrangler deploy` (needs the Wrangler CLI + Cloudflare auth).
-4. The SkyGuru endpoint is the **`test-hb` (test)** host — swap to the production leads URL before launch if you have one.
+4. The SkyGuru endpoint is `https://inclusive.skyguru.ai/api/v1/public/leads` (test link) — swap to the production leads URL before launch if it differs.
 5. **Do a real end-to-end test submission** (uploads a real CV + creates a CRM lead) — I verified routing,
    attribution capture, R2 binding and validation, but did not create a live lead.
 
