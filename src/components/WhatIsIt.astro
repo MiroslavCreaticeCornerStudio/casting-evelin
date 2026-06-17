@@ -1,0 +1,144 @@
+---
+// "What is it" — Това е повече от кастинг. Figma node 2168:333
+---
+
+<section id="what-is-it" class="wii">
+  <img src="/assets/images/clapperboard.png" alt="" class="wii__clapper" aria-hidden="true" width="552" height="552" />
+
+  <div class="container wii__inner">
+    <div class="wii__media" data-reveal>
+      <img
+        src="/assets/images/what-is-it-collage.png"
+        alt="Колаж: запиши се за кастинг — мегафон, полароид снимки и логото на INclusive"
+        width="505"
+        height="554"
+        loading="lazy"
+      />
+    </div>
+
+    <div class="wii__content" data-reveal-group>
+      <h2 class="wii__title">Това е повече от кастинг</h2>
+      <div class="wii__paras">
+        <p>
+          Вместо стандартно интервю за работа или обикновен кастинг за риалити, ние ти
+          предлагаме кариерен трамплин.
+        </p>
+        <p>
+          Кандидатствай и получи възможност да станеш част от екипа ни, да се обучаваш от
+          най-добрите в бранша, и да трупаш опит на терен.
+        </p>
+      </div>
+
+      <blockquote class="wii__quote">
+        Покажи ни на какво си способен и застани <span>рамо до рамо</span> с Евелин на
+        екрана в сезон 2 на „Борба до ключ“!
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<style>
+  .wii {
+    position: relative;
+    background-color: var(--color-gray-40);
+    padding-block: 6.25em; /* 100px */
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .wii__inner {
+    display: flex;
+    gap: 5.375em; /* 86px */
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .wii__media {
+    flex-shrink: 0;
+    width: 31.5625em; /* 505px */
+  }
+  .wii__media img {
+    width: 100%;
+    height: auto;
+  }
+
+  .wii__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.375em; /* 38px */
+    max-width: 37.0625em; /* 593px */
+    padding-top: 4.5em; /* 72px */
+  }
+
+  .wii__title {
+    color: var(--color-gray-100);
+    font-family: var(--font-heading);
+    font-size: 3.25em; /* 52px */
+    font-weight: 500;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .wii__paras {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375em;
+    color: var(--color-gray-80);
+    font-family: var(--font-body);
+    font-size: 1.25em; /* 20px */
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .wii__quote {
+    margin: 0;
+    padding-left: 1.25em;
+    border-left: 1px solid var(--color-gold-100);
+    color: var(--color-gray-80);
+    font-family: var(--font-heading);
+    font-size: 1.75em; /* 28px */
+    font-weight: 500;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+  .wii__quote span { color: var(--color-gold-100); }
+
+  .wii__clapper {
+    position: absolute;
+    right: -4em;
+    bottom: -10em;
+    width: 30em; /* ~552px scaled */
+    height: auto;
+    opacity: 0.9;
+    transform: rotate(-20.95deg);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* ── Tablet ── */
+  @media screen and (max-width: 991px) {
+    .wii__inner { gap: 3em; }
+    .wii__content { padding-top: 1em; }
+    .wii__title { font-size: 2.75em; }
+    .wii__clapper { width: 22em; right: -6em; }
+  }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 767px) {
+    /* text first, collage image after */
+    .wii__inner { flex-direction: column-reverse; align-items: center; gap: 2.5em; }
+    .wii__media { width: 100%; max-width: 31.5625em; }
+    .wii__content { padding-top: 0; align-items: flex-start; }
+    .wii__title { font-size: 2.25em; }
+    .wii__quote { font-size: 1.4em; }
+    /* clapperboard peeks into the top-right corner (clipped by overflow:hidden) */
+    .wii__clapper {
+      display: block;
+      width: 15em;
+      top: -4em;
+      right: -6em;
+      bottom: auto;
+      opacity: 0.85;
+    }
+  }
+</style>

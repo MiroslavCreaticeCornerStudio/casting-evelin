@@ -1,0 +1,133 @@
+---
+// Info Section — film-strip band with 3 key facts. Figma node 2168:217
+---
+
+<section id="info" class="info" aria-label="Ключова информация за кастинга">
+  <img src="/assets/images/film-strip.svg" alt="" class="info__film" aria-hidden="true" />
+  <span class="info__glow info__glow--left" aria-hidden="true"></span>
+  <span class="info__glow info__glow--right" aria-hidden="true"></span>
+
+  <div class="container">
+    <ul class="info__items" data-reveal-group>
+      <li class="info__item">
+        <span class="info__big">5 август</span>
+        <span class="info__label">краен срок за кандидатстване</span>
+      </li>
+
+      <li class="info__item">
+        <svg class="info__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <span class="info__label">Кастингът се провежда в София</span>
+      </li>
+
+      <li class="info__item">
+        <svg class="info__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="2.5" y="7" width="19" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M8.5 7V5.5A1.5 1.5 0 0 1 10 4h4a1.5 1.5 0 0 1 1.5 1.5V7" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M2.5 12.5h19M12 11.5v2.5" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <span class="info__label">Опитът не е задължителен</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .info {
+    position: relative;
+    background-color: var(--color-gray-100);
+    padding-block: 7.5em 6em;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .info__film {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 184%;
+    height: 75%;
+    max-width: none;
+    transform: translate(-50%, -50%) rotate(-0.73deg);
+    opacity: 0.85;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .info__glow {
+    position: absolute;
+    z-index: -1;
+    width: 28em;
+    height: 22em;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+  }
+  .info__glow--left {
+    left: -10em;
+    top: 0;
+    background: radial-gradient(circle, rgba(196, 149, 45, 0.22), transparent 65%);
+  }
+  .info__glow--right {
+    right: -8em;
+    bottom: -4em;
+    background: radial-gradient(circle, rgba(219, 189, 107, 0.18), transparent 65%);
+  }
+
+  .info__items {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 6em; /* 96px */
+  }
+
+  .info__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em; /* 16px */
+    width: 16.25em; /* 260px */
+    text-align: center;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .info__big {
+    color: var(--color-gold-80);
+    font-size: 2em; /* 32px */
+    font-weight: 600;
+  }
+
+  .info__icon {
+    width: 2.625em; /* 42px */
+    height: 2.625em;
+    color: var(--color-gold-80);
+    flex-shrink: 0;
+  }
+
+  .info__label {
+    color: var(--color-text-light);
+    font-size: 1.5em; /* 24px */
+    font-weight: 500;
+  }
+
+  /* ── Tablet ── */
+  @media screen and (max-width: 991px) {
+    .info__items { gap: 3em; }
+    .info__film { width: 240%; }
+  }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 767px) {
+    .info { padding-block: 4em; }
+    .info__items {
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5em;
+    }
+    .info__film { width: 320%; opacity: 0.5; }
+  }
+</style>

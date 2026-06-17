@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Благодарим ти! | INclusive кастинг"
+  description="Получихме твоята кандидатура за „Борба до ключ“ 2."
+  noindex={true}
+>
+  <span id="top"></span>
+  <Navbar />
+  <main id="main" tabindex="-1">
+    <section class="thankyou">
+      <span class="thankyou__glow" aria-hidden="true"></span>
+      <div class="container thankyou__inner">
+        <span class="thankyou__check" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" width="64" height="64">
+            <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="2" />
+            <path d="M20 33l8 8 16-18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <h1 class="thankyou__title">Благодарим ти!</h1>
+        <p class="thankyou__text">
+          Получихме твоята кандидатура за „Борба до ключ“ 2. Ще прегледаме всичко
+          внимателно и съвсем скоро ще се свържем с избраните кандидати.
+        </p>
+        <a href="/" class="btn thankyou__btn">Обратно към началото</a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .thankyou {
+    position: relative;
+    width: 100%;
+    min-height: 44em; /* ~704px keeps the footer down */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    isolation: isolate;
+    background-color: var(--color-gray-100);
+    text-align: center;
+  }
+  .thankyou__glow {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 42em;
+    height: 28em;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(219, 189, 107, 0.18), transparent 65%);
+    filter: blur(50px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .thankyou__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em; /* 24px */
+    max-width: 40em; /* 640px */
+    padding-block: 6em 5em;
+  }
+  .thankyou__check {
+    display: inline-flex;
+    color: var(--color-gold-80);
+  }
+  .thankyou__check svg { width: 4.5em; height: 4.5em; }
+
+  .thankyou__title {
+    font-family: var(--font-heading);
+    font-size: 3.5em; /* 56px */
+    font-weight: 500;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+  }
+  .thankyou__text {
+    font-family: var(--font-body);
+    font-size: 1.25em; /* 20px */
+    line-height: 1.5;
+    color: var(--color-text-light);
+  }
+  .thankyou__btn { margin-top: 0.5em; }
+
+  @media (max-width: 767px) {
+    .thankyou { min-height: 36em; }
+    .thankyou__title { font-size: 2.4em; }
+    .thankyou__text { font-size: 1.0625em; }
+  }
+</style>

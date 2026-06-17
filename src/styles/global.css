@@ -1,0 +1,266 @@
+/* ==========================================================================
+   Fluid Scaling System
+   Viewport-based scaling — all em values scale automatically.
+   ========================================================================== */
+
+/* Desktop */
+:root {
+  --size-unit: 16; /* body font-size in design — no px */
+  --size-container-ideal: 1470; /* Figma frame width — INclusive casting design */
+  --size-container-min: 992px;
+  --size-container-max: 1470px;
+  --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
+  --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
+  --container-padding: 6.9375em; /* 111px — matches Figma navbar content inset (1470 - 2×111 = 1248 content) */
+}
+
+/* Tablet */
+@media screen and (max-width: 991px) {
+  :root {
+    --size-container-ideal: 834;
+    --size-container-min: 768px;
+    --size-container-max: 991px;
+    --container-padding: 1.5em;
+  }
+}
+
+/* Mobile Landscape */
+@media screen and (max-width: 767px) {
+  :root {
+    --size-container-ideal: 550;
+    --size-container-min: 480px;
+    --size-container-max: 767px;
+    --container-padding: 1em;
+  }
+}
+
+/* Mobile Portrait */
+@media screen and (max-width: 479px) {
+  :root {
+    --size-container-ideal: 390;
+    --size-container-min: 320px;
+    --size-container-max: 479px;
+    --container-padding: 1em;
+  }
+}
+
+/* ==========================================================================
+   Design Tokens — Update per project (Phase 0)
+   ========================================================================== */
+
+:root {
+  /* Colors — INclusive casting (dark charcoal + gold) */
+  --color-gray-100: #21232b; /* primary dark bg */
+  --color-gray-80: #393c46;  /* secondary dark / cards */
+  --color-gray-40: #d8dbde;
+  --color-gray-20: #edeff1;
+  --color-gray-10: #f5f4ec;  /* warm off-white text on dark */
+  --color-gold-100: #c4952d; /* deep gold */
+  --color-gold-80: #dbbd6b;  /* bright gold (accent, CTA) */
+  --color-gold-gradient: linear-gradient(90deg, #c4952d 0%, #dbbd6b 50%, #c4952d 100%);
+
+  /* Semantic aliases */
+  --color-primary: #21232b;
+  --color-accent: #dbbd6b;
+  --color-bg-white: #ffffff;
+  --color-bg-dark: #21232b;
+  --color-text-primary: #21232b;
+  --color-text-secondary: #393c46;
+  --color-text-light: #f5f4ec;
+  --color-text-white: #ffffff;
+  --color-border: #393c46;
+
+  /* Typography — real fonts via Typekit; Montserrat/Manrope as Cyrillic-safe fallbacks */
+  --font-heading: 'le-havre', 'Montserrat', system-ui, sans-serif;
+  --font-body: 'futura-pt', 'Manrope', system-ui, sans-serif;
+
+  /* Spacing scale */
+  --spacing-xs: 0.25em;   /* 4px */
+  --spacing-sm: 0.5em;    /* 8px */
+  --spacing-md: 1em;      /* 16px */
+  --spacing-lg: 1.5em;    /* 24px */
+  --spacing-xl: 2em;      /* 32px */
+  --spacing-2xl: 2.5em;   /* 40px */
+  --spacing-3xl: 3em;     /* 48px */
+  --spacing-4xl: 3.25em;  /* 52px */
+  --spacing-5xl: 4em;     /* 64px */
+  --spacing-section: 6.25em; /* 100px */
+
+  /* Border radius */
+  --radius-sm: 0.25em;    /* 4px */
+  --radius-md: 0.5em;     /* 8px */
+  --radius-lg: 1em;       /* 16px */
+  --radius-pill: 3em;     /* 48px */
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--size-font);
+  color: var(--color-text-light);
+  background-color: var(--color-bg-dark);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-size: inherit; /* drop UA default em sizes so component em values resolve to design px */
+  font-weight: inherit;
+  line-height: 1.143;
+  overflow-wrap: break-word;
+}
+
+p {
+  overflow-wrap: break-word;
+}
+
+/* ==========================================================================
+   Base Utilities
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--size-container);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Section label — uppercase eyebrow text (Futura PT Medium look) */
+.section-label {
+  font-family: var(--font-body);
+  font-size: 1em;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+}
+
+/* Button — primary gold (matches Figma "Кандидатствай сега") */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 0.8125em 3em; /* 13px 48px */
+  background-color: var(--color-gold-80);
+  color: var(--color-gray-100);
+  font-family: var(--font-body);
+  font-size: 1.125em; /* 18px */
+  font-weight: 600;
+  line-height: 1.3;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color var(--transition-base), transform var(--transition-base);
+}
+
+.btn:hover {
+  background-color: var(--color-gold-100);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Focus & Accessibility
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.sr-only:focus {
+  position: fixed;
+  top: 0.5em;
+  left: 0.5em;
+  z-index: 9999;
+  width: auto;
+  height: auto;
+  padding: 0.75em 1.5em;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background-color: var(--color-gold-80);
+  color: var(--color-gray-100);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}

@@ -1,0 +1,167 @@
+---
+// Navbar — INclusive logo, nav links, outline CTA. Figma node 2168:112
+const links = [
+  { label: 'Какво представлява', href: '#what-is-it' },
+  { label: 'Кой е Евелин', href: '#evelin' },
+  { label: 'Защо', href: '#benefits' },
+  { label: 'Кого търсим', href: '#who' },
+  { label: 'Как протича процесът', href: '#process' },
+];
+---
+
+<header class="navbar">
+  <div class="container navbar__inner">
+    <a href="#top" class="navbar__logo" aria-label="INclusive недвижими имоти — начало">
+      <img src="/assets/images/logo-inclusive.svg" alt="INclusive" width="138" height="41" class="navbar__logo-mark" />
+      <img src="/assets/images/logo-tagline.svg" alt="недвижими имоти" width="105" height="8" class="navbar__logo-tagline" />
+    </a>
+
+    <nav class="navbar__links" aria-label="Основна навигация">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <a href="#kandidatstvai" class="navbar__cta">Запиши се сега</a>
+
+    <button class="navbar__burger" aria-label="Меню" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <nav class="navbar__mobile" id="mobile-menu" aria-label="Мобилна навигация" hidden>
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    <a href="#kandidatstvai" class="navbar__cta navbar__cta--mobile">Запиши се сега</a>
+  </nav>
+</header>
+
+<style>
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    background-color: var(--color-gray-100);
+    border-bottom: 0.5px solid var(--color-gold-80);
+  }
+
+  .navbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1em; /* 16px */
+    gap: 1.5em;
+  }
+
+  .navbar__logo {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
+    flex-shrink: 0;
+  }
+  .navbar__logo-mark { width: 8.64em; height: auto; } /* 138px */
+  .navbar__logo-tagline { width: 6.56em; height: auto; margin-left: 1.04em; }
+
+  .navbar__links {
+    display: flex;
+    align-items: center;
+    gap: 2.5em; /* 40px */
+    font-family: var(--font-body);
+    font-size: 1.125em; /* 18px */
+    color: var(--color-text-light);
+    white-space: nowrap;
+  }
+  .navbar__links a {
+    position: relative;
+    transition: color var(--transition-base);
+  }
+  .navbar__links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.4em;
+    width: 0;
+    height: 1px;
+    background-color: var(--color-gold-80);
+    transition: width var(--transition-base);
+  }
+  .navbar__links a:hover { color: var(--color-gold-80); }
+  .navbar__links a:hover::after { width: 100%; }
+
+  .navbar__cta {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8125em 3em; /* 13px 48px */
+    border: 1px solid var(--color-gold-80);
+    color: var(--color-text-light);
+    font-family: var(--font-body);
+    font-size: 1.125em; /* 18px */
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color var(--transition-base), color var(--transition-base);
+  }
+  .navbar__cta:hover {
+    background-color: var(--color-gold-80);
+    color: var(--color-gray-100);
+  }
+
+  /* Hamburger */
+  .navbar__burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.75em;
+    height: 2.75em;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .navbar__burger span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background-color: var(--color-gold-80);
+    transition: transform var(--transition-base), opacity var(--transition-base);
+  }
+  .navbar__burger[aria-expanded='true'] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .navbar__burger[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+  .navbar__burger[aria-expanded='true'] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .navbar__mobile {
+    display: none;
+    flex-direction: column;
+    gap: 1.25em;
+    padding: 1.5em var(--container-padding) 2em;
+    background-color: var(--color-gray-100);
+    border-top: 0.5px solid rgba(219, 189, 107, 0.3);
+    font-size: 1.125em;
+    color: var(--color-text-light);
+  }
+  .navbar__cta--mobile { align-self: flex-start; }
+
+  /* ── Tablet / mobile: collapse to hamburger ── */
+  @media screen and (max-width: 991px) {
+    .navbar__links,
+    .navbar__inner > .navbar__cta { display: none; }
+    .navbar__burger { display: flex; }
+    .navbar__mobile:not([hidden]) { display: flex; }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const burger = document.querySelector('.navbar__burger');
+    const menu = document.getElementById('mobile-menu');
+    if (!burger || !menu) return;
+    const toggle = (open) => {
+      burger.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+    };
+    burger.addEventListener('click', () => {
+      toggle(burger.getAttribute('aria-expanded') !== 'true');
+    });
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => toggle(false)));
+  })();
+</script>

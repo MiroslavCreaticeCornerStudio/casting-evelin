@@ -1,0 +1,184 @@
+---
+// Footer — logo, nav, contact, copyright bar. Figma node 2168:682
+const links = [
+  { label: 'Какво представлява', href: '#what-is-it' },
+  { label: 'Кой е Евелин', href: '#evelin' },
+  { label: 'Защо', href: '#benefits' },
+  { label: 'Кого търсим', href: '#who' },
+  { label: 'Как протича процесът', href: '#process' },
+];
+---
+
+<footer id="footer" class="footer">
+  <img src="/assets/images/film-strip.svg" alt="" class="footer__film" aria-hidden="true" />
+
+  <div class="container footer__content" data-reveal-group>
+    <span class="footer__rule" aria-hidden="true"></span>
+
+    <a href="#top" class="footer__logo" aria-label="INclusive недвижими имоти — начало">
+      <img src="/assets/images/logo-inclusive.svg" alt="INclusive" width="143" height="43" />
+      <img src="/assets/images/logo-tagline.svg" alt="недвижими имоти" width="109" height="9" class="footer__tagline" />
+    </a>
+
+    <nav class="footer__links" aria-label="Долна навигация">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <div class="footer__contact">
+      <span class="footer__contact-item">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="15" height="19">
+          <path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        гр. София, бул. Тодор Александров №71 /метростанция „Опълченска“/
+      </span>
+      <a href="tel:070030101" class="footer__contact-item">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="17" height="17">
+          <path d="M5 4h3l1.5 4-2 1.5a12 12 0 0 0 5 5l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        0700 30 101
+      </a>
+    </div>
+  </div>
+
+  <div class="footer__bar">
+    <div class="container footer__bar-inner">
+      <a href="#" class="footer__privacy">Защита на личните данни</a>
+      <span class="footer__copy">„Инклузив България“ АД, 2026 година</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    background-color: rgba(57, 60, 70, 0.3);
+    padding-top: 4.5em;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .footer__film {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    width: 150%;
+    max-width: none;
+    transform: translate(-50%, -50%);
+    opacity: 0.35;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .footer__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em; /* 32px */
+    padding-bottom: 3em;
+    isolation: isolate;
+  }
+  /* Soft gold glow radiating from the rule */
+  .footer__content::before {
+    content: '';
+    position: absolute;
+    top: -2em;
+    left: 50%;
+    width: 28em;
+    height: 11em;
+    transform: translateX(-50%);
+    background: radial-gradient(
+      ellipse 50% 50% at 50% 28%,
+      rgba(219, 189, 107, 0.4) 0%,
+      rgba(219, 189, 107, 0.13) 38%,
+      transparent 70%
+    );
+    z-index: -1;
+    pointer-events: none;
+    animation: footer-glow 4.5s ease-in-out infinite;
+  }
+
+  .footer__rule {
+    position: relative;
+    width: 8.3125em;
+    height: 4px;
+    background: var(--color-gold-gradient);
+    border-radius: 2px;
+    box-shadow: 0 0 12px 3px rgba(219, 189, 107, 0.5);
+  }
+  @keyframes footer-glow {
+    0%, 100% { opacity: 0.78; }
+    50% { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .footer__content::before { animation: none; }
+  }
+
+  .footer__logo {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .footer__logo img { width: 8.9375em; height: auto; } /* 143px */
+  .footer__tagline { width: 6.78em !important; }
+
+  .footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.5em; /* 40px */
+    font-family: var(--font-body);
+    font-size: 1.125em; /* 18px */
+    color: var(--color-text-light);
+  }
+  .footer__links a { transition: color var(--transition-base); }
+  .footer__links a:hover { color: var(--color-gold-80); }
+
+  .footer__contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5em; /* 24px */
+  }
+  .footer__contact-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75em; /* 12px */
+    color: var(--color-text-light);
+    font-family: var(--font-body);
+    font-size: 1em; /* 16px */
+    font-weight: 300;
+  }
+  .footer__contact-item svg { color: var(--color-gold-80); flex-shrink: 0; }
+  a.footer__contact-item:hover { color: var(--color-gold-80); }
+
+  /* Gold copyright bar */
+  .footer__bar { background-color: var(--color-gold-80); }
+  .footer__bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    padding-block: 0.75em;
+  }
+  .footer__privacy,
+  .footer__copy {
+    color: var(--color-gray-100);
+    font-family: var(--font-body);
+    font-size: 1.0625em; /* 17px */
+  }
+  .footer__privacy { text-decoration: underline; }
+  .footer__privacy:hover { opacity: 0.75; }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 767px) {
+    .footer__links { gap: 1.25em 2em; }
+    .footer__contact { flex-direction: column; align-items: center; gap: 0.75em; text-align: center; }
+    /* contact item: icon on top, text below */
+    .footer__contact-item { flex-direction: column; gap: 0.5em; }
+    .footer__contact-item svg { min-width: 32px; }
+    .footer__bar-inner { flex-direction: column; gap: 0.5em; text-align: center; }
+    .footer__privacy, .footer__copy { font-size: 0.95em; }
+  }
+</style>

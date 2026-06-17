@@ -1,0 +1,309 @@
+---
+// Final CTA — registration form. Figma node 2168:606
+---
+
+<section id="kandidatstvai" class="cta">
+  <span class="cta__glow" aria-hidden="true"></span>
+
+  <div class="container">
+    <div class="cta__box" data-reveal>
+      <div class="cta__heading">
+        <h2 class="cta__title">
+          Стани част от отбор INclusive в <span>„Борба до ключ“ 2</span>
+        </h2>
+        <span class="cta__rule" aria-hidden="true"></span>
+      </div>
+
+      <form class="cta__form" method="post" action="/api/apply" enctype="multipart/form-data" novalidate>
+        {/* Hidden attribution fields — auto-filled from URL params / Meta cookies for offline conversion tracking */}
+        <input type="hidden" name="fbclid" />
+        <input type="hidden" name="fbc" />
+        <input type="hidden" name="fbp" />
+        <input type="hidden" name="utm_source" />
+        <input type="hidden" name="utm_medium" />
+        <input type="hidden" name="utm_campaign" />
+        <input type="hidden" name="utm_term" />
+        <input type="hidden" name="utm_content" />
+        <input type="hidden" name="landing_page" />
+        <input type="hidden" name="referrer" />
+
+        <div class="field">
+          <label for="cta-name">Име и фамилия*</label>
+          <input id="cta-name" name="name" type="text" placeholder="Име и фамилия" required autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="cta-phone">Телефон*</label>
+          <input id="cta-phone" name="phone" type="tel" placeholder="Телефон" required autocomplete="tel" />
+        </div>
+
+        <div class="field">
+          <label for="cta-email">Имейл*</label>
+          <input id="cta-email" name="email" type="email" placeholder="Имейл" required autocomplete="email" />
+        </div>
+
+        <div class="field">
+          <span class="field__label">СV*</span>
+          <label class="file-btn">
+            <span class="file-btn__label">Прикачи файл</span>
+            <span class="file-btn__name" data-file-name>Няма избран файл</span>
+            <input type="file" name="cv" accept=".pdf,.doc,.docx" required />
+          </label>
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" name="consent" required />
+          <span>Давам съгласието си данните ми да бъдат обработени съгласно приложения формуляр</span>
+        </label>
+
+        <button type="submit" class="btn cta__submit">Кандидатствай сега</button>
+
+        <p class="cta__status" role="alert" hidden></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    background-color: var(--color-gray-100);
+    /* Studio image (poster on the right) under a left-heavy dark overlay so the
+       form stays readable and the section keeps the dark theme. */
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(33, 35, 43, 0.97) 0%,
+        rgba(33, 35, 43, 0.9) 28%,
+        rgba(33, 35, 43, 0) 50%
+      ),
+      url('/assets/images/final-cta-bg.jpg');
+    background-size: cover, cover;
+    background-position: center, center right;
+    background-repeat: no-repeat, no-repeat;
+    padding-block: 6.625em; /* ~106px */
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .cta__glow {
+    position: absolute;
+    right: -6em;
+    top: 20%;
+    width: 38em;
+    height: 30em;
+    background: radial-gradient(circle, rgba(219, 189, 107, 0.12), transparent 65%);
+    filter: blur(40px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .cta__box {
+    width: 38em; /* 608px = 496 + 2×56 */
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.375em; /* 38px */
+    padding: 3.5em; /* 56px */
+    border-top: 3px solid var(--color-gold-80);
+    background-image:
+      linear-gradient(0deg, rgba(219, 189, 107, 0.2) 0%, rgba(219, 189, 107, 0.05) 19%, rgba(219, 189, 107, 0) 28%),
+      linear-gradient(90deg, rgba(57, 60, 70, 0.6), rgba(57, 60, 70, 0.6));
+    backdrop-filter: blur(2px);
+  }
+
+  .cta__heading { display: flex; flex-direction: column; gap: 1.5em; }
+  .cta__title {
+    color: var(--color-text-light);
+    font-family: var(--font-heading);
+    font-size: 3em; /* 48px */
+    font-weight: 500;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+  .cta__title span { color: var(--color-gold-80); }
+  .cta__rule { width: 1.5625em; height: 2px; background: var(--color-gold-gradient); }
+
+  .cta__form { display: flex; flex-direction: column; gap: 1.25em; }
+
+  .field { display: flex; flex-direction: column; gap: 0.5em; }
+  .field label,
+  .field__label,
+  .consent span {
+    color: var(--color-text-light);
+    font-family: var(--font-body);
+    font-size: 1em; /* 16px */
+  }
+
+  .field input[type='text'],
+  .field input[type='tel'],
+  .field input[type='email'] {
+    width: 100%;
+    padding: 0.8125em 1em; /* 13px 16px */
+    background-color: var(--color-gray-80);
+    border: 1px solid var(--color-text-light);
+    color: var(--color-text-light);
+    font-family: var(--font-body);
+    font-size: 1em;
+  }
+  .field input::placeholder { color: rgba(245, 244, 236, 0.7); }
+  .field input:focus-visible { outline: 2px solid var(--color-gold-80); outline-offset: 1px; }
+
+  /* File upload — gold button hiding the native input */
+  .file-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 1em;
+    width: fit-content;
+    cursor: pointer;
+  }
+  .file-btn__label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25em 0.75em 0.375em; /* 4 12 6 */
+    background-color: var(--color-gold-80);
+    color: var(--color-gray-100);
+    font-family: var(--font-body);
+    font-size: 1.125em; /* 18px */
+    font-weight: 600;
+  }
+  .file-btn:hover .file-btn__label { background-color: var(--color-gold-100); }
+  .file-btn__name { color: rgba(245, 244, 236, 0.7); font-size: 0.875em; }
+  .file-btn input[type='file'] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .file-btn input[type='file']:focus-visible + .file-btn__label,
+  .file-btn:focus-within .file-btn__label { outline: 2px solid var(--color-text-light); outline-offset: 2px; }
+
+  .consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625em;
+    cursor: pointer;
+  }
+  .consent input[type='checkbox'] {
+    appearance: none;
+    -webkit-appearance: none;
+    flex-shrink: 0;
+    width: 1.125em;
+    height: 1.125em;
+    margin-top: 0.15em;
+    border: 1px solid var(--color-gold-80);
+    background: transparent;
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+  }
+  .consent input[type='checkbox']::before {
+    content: '';
+    width: 0.6em;
+    height: 0.6em;
+    transform: scale(0);
+    transition: transform var(--transition-fast);
+    background: var(--color-gold-80);
+  }
+  .consent input[type='checkbox']:checked::before { transform: scale(1); }
+  .consent span { font-size: 1em; font-weight: 300; line-height: 1.3; }
+
+  .cta__submit { width: 100%; margin-top: 0.75em; }
+
+  .cta__status {
+    margin: 0;
+    color: var(--color-gold-80);
+    font-family: var(--font-body);
+    font-size: 0.95em;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .cta__status[hidden] { display: none; }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 767px) {
+    .cta {
+      background-image:
+        linear-gradient(180deg, rgba(33, 35, 43, 0.9) 0%, rgba(33, 35, 43, 0.85) 60%, rgba(33, 35, 43, 0.92) 100%),
+        url('/assets/images/final-cta-bg.jpg');
+      background-position: center, center right;
+    }
+    .cta__box { width: 100%; padding: 1em; }
+    .cta__title { font-size: 2.2em; }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const form = document.querySelector('.cta__form');
+    if (!form) return;
+
+    // ── Selected-file name display ──
+    const fileInput = form.querySelector('input[type="file"]');
+    const fileName = form.querySelector('[data-file-name]');
+    fileInput?.addEventListener('change', () => {
+      fileName.textContent = fileInput.files?.[0]?.name || 'Няма избран файл';
+    });
+
+    // ── Offline conversion tracking ──
+    // Capture the Facebook click id + UTMs (+ Meta cookies) on landing, persist
+    // them, and inject them into the hidden fields so they travel with the lead.
+    const UTM = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+    const STORE_KEY = 'inc_attribution';
+    const getCookie = (name) => {
+      const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+      return m ? decodeURIComponent(m.pop()) : '';
+    };
+
+    let store = {};
+    try { store = JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); } catch {}
+
+    const params = new URLSearchParams(window.location.search);
+    UTM.forEach((k) => { const v = params.get(k); if (v) store[k] = v; });
+
+    const fbclid = params.get('fbclid');
+    if (fbclid) {
+      store.fbclid = fbclid;
+      store.fbc = `fb.1.${Date.now()}.${fbclid}`; // Meta's expected fbc format
+    }
+    const cookieFbc = getCookie('_fbc');
+    const cookieFbp = getCookie('_fbp');
+    if (cookieFbc) store.fbc = cookieFbc; // real Pixel cookies = best CAPI match
+    if (cookieFbp) store.fbp = cookieFbp;
+    if (!store.landing_page) store.landing_page = window.location.href;
+    if (!store.referrer) store.referrer = document.referrer || '';
+
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch {}
+
+    const fill = () => {
+      Object.entries(store).forEach(([k, v]) => {
+        const field = form.querySelector('input[name="' + k + '"]');
+        if (field) field.value = v || '';
+      });
+    };
+    fill();
+
+    // ── Submit: POST to /api/apply (uploads CV to R2 + forwards lead) → /thank-you ──
+    const status = form.querySelector('.cta__status');
+    const submitBtn = form.querySelector('[type="submit"]');
+    const showError = (msg) => { if (status) { status.textContent = msg; status.hidden = false; } };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (status) status.hidden = true;
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      fill();
+      const original = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Изпращане…'; }
+      try {
+        const res = await fetch('/api/apply', { method: 'POST', body: new FormData(form) });
+        if (res.status === 201) { window.location.href = '/thank-you'; return; }
+        const data = await res.json().catch(() => ({}));
+        showError(data.message || 'Възникна грешка. Опитайте отново.');
+      } catch {
+        showError('Неуспешна връзка със сървъра.');
+      }
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = original; }
+    });
+  })();
+</script>
