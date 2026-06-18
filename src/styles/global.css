@@ -124,6 +124,10 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Guard against horizontal scroll from decorative overflow (film strips,
+     glows, the zoomed mobile video). `clip` (not hidden) clips the x-axis
+     WITHOUT creating a scroll container, so the sticky navbar still works. */
+  overflow-x: clip;
 }
 
 img,
