@@ -15,22 +15,24 @@
     </p>
   </div>
 
-  <div class="video__stage">
-    <img
-      class="video__scene"
-      src="/assets/images/video-scene.png"
-      alt="Евелин Апостолов на екран в студио на INclusive"
-      width="1470"
-      height="1047"
-      loading="lazy"
-    />
-    <button class="video__play" type="button" aria-label="Гледай видеото с Евелин" data-video-open>
-      <span class="video__hotspot" aria-hidden="true"></span>
-    </button>
-    <!-- Video plays here — positioned exactly over the on-screen frame -->
-    <div class="video__embed" data-video-embed hidden>
-      <button class="video__close" type="button" aria-label="Затвори видеото" data-video-close>&times;</button>
-      <div class="video__embed-inner" data-video-target></div>
+  <div class="video__stage-clip">
+    <div class="video__stage">
+      <img
+        class="video__scene"
+        src="/assets/images/video-scene.png"
+        alt="Евелин Апостолов на екран в студио на INclusive"
+        width="1470"
+        height="1047"
+        loading="lazy"
+      />
+      <button class="video__play" type="button" aria-label="Гледай видеото с Евелин" data-video-open>
+        <span class="video__hotspot" aria-hidden="true"></span>
+      </button>
+      <!-- Video plays here — positioned exactly over the on-screen frame -->
+      <div class="video__embed" data-video-embed hidden>
+        <button class="video__close" type="button" aria-label="Затвори видеото" data-video-close>&times;</button>
+        <div class="video__embed-inner" data-video-target></div>
+      </div>
     </div>
   </div>
 </section>
@@ -76,9 +78,15 @@
   }
 
   /* Full-bleed projector scene */
+  /* Clip wrapper: lets us zoom the stage on mobile without overflowing the text */
+  .video__stage-clip {
+    width: 100%;
+    overflow: hidden;
+  }
   .video__stage {
     position: relative;
     width: 100%;
+    transform-origin: 50% 37%; /* zoom centered on the on-screen frame */
   }
   .video__scene {
     width: 100%;
@@ -180,6 +188,9 @@
     .video { padding-top: 0; }
     .video__title { font-size: 2.1em; }
     .video__hotspot { width: 4em; height: 4em; }
+    /* Zoom the whole stage (scene + player) toward the screen so the video is
+       bigger; the clip wrapper hides the cropped edges. */
+    .video__stage { transform: scale(1.5); }
   }
 </style>
 
