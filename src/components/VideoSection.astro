@@ -203,16 +203,19 @@
     const target = stage.querySelector('[data-video-target]');
     const closeBtn = stage.querySelector('[data-video-close]');
 
-    // ▶ Paste the Евелин intro video here — a YouTube/Vimeo link or an .mp4 path:
-    const VIDEO_SRC = '';
+    // ▶ Евелин intro video — a YouTube/Vimeo link, a Google Drive link, or an .mp4 path:
+    const VIDEO_SRC = 'https://drive.google.com/file/d/1ZoCYf_53R0pvoeQomM3c-7wk-lm2W1tq/view?usp=sharing';
 
     const open = () => {
       const yt = VIDEO_SRC.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]+)/);
       const vimeo = VIDEO_SRC.match(/vimeo\.com\/(\d+)/);
+      const drive = VIDEO_SRC.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
       if (yt) {
         target.innerHTML = `<iframe src="https://www.youtube.com/embed/${yt[1]}?autoplay=1&rel=0" title="Видео с Евелин" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
       } else if (vimeo) {
         target.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeo[1]}?autoplay=1" title="Видео с Евелин" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+      } else if (drive) {
+        target.innerHTML = `<iframe src="https://drive.google.com/file/d/${drive[1]}/preview" title="Видео с Евелин" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
       } else if (VIDEO_SRC) {
         target.innerHTML = `<video src="${VIDEO_SRC}" controls autoplay playsinline></video>`;
       } else {
