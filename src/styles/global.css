@@ -114,6 +114,10 @@ html {
   -moz-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /* Clip horizontal overflow at the viewport/root level (body-level clip alone
+     doesn't stop the overflow propagating to the viewport on real devices).
+     `clip` keeps vertical scroll + sticky working (it doesn't create a scroll box). */
+  overflow-x: clip;
 }
 
 body {
